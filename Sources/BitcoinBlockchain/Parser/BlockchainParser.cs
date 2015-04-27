@@ -64,8 +64,8 @@ namespace BitcoinBlockchain.Parser
         /// </param>
         /// <param name="firstBlockchainFileName">
         /// The name of the first blockchain file that should be processed from the series of blockchain files. 
-        /// In the list of blockchain files that is ordered by name, any blockchain files that appears prior 
-        /// to the file specified by <param name="firstBlockchainFileName" /> will be ignored.
+        /// In the list of blockchain files ordered by name, any blockchain file that appears prior
+        /// to the file specified by this parameter will be ignored.
         /// If null then all file from the series of blockchain files will be processed.
         /// </param>
         /// <exception cref="InvalidBlockchainFilesException">
@@ -336,8 +336,8 @@ namespace BitcoinBlockchain.Parser
         /// </param>
         /// <param name="firstBlockchainFileName">
         /// The name of the first blockchain file that should be processed from the series of blockchain files.
-        /// In the list of blockchain files that is ordered by name, any blockchain files that appear prior 
-        /// to the file specified by <param name="firstBlockchainFileName" /> will be ignored.
+        /// In the list of blockchain files ordered by name, any blockchain file that appears prior
+        /// to the file specified by this parameter will be ignored.
         /// </param>
         /// <returns>
         /// A list ordered by name of FileInfo instances representing all blockchain files that will be processed.
@@ -366,7 +366,7 @@ namespace BitcoinBlockchain.Parser
         }
 
         /// <summary>
-        /// Validates the list of file names specified in <param name="blockchainFiles" />.
+        /// Validates the given list of file names.
         /// </summary>
         /// <param name="blockchainFiles">
         /// A list ordered by name of FileInfo instances representing all blockchain files in the given path.
@@ -411,14 +411,14 @@ namespace BitcoinBlockchain.Parser
         /// The list ordered by name of all blockchain files found at the blockchain folder.
         /// </param>
         /// <param name="firstBlockchainFileName">
-        /// The name of the first blockchain file that should be processed from the series of blockchain files. 
-        /// In the list of blockchain files that is ordered by name, any blockchain files that are prior to the 
-        /// to the file specified by <param name="firstBlockchainFileName" /> will be ignored.
+        /// The name of the first blockchain file that should be processed from the series of blockchain files.
+        /// In the list of blockchain files ordered by name, any blockchain file that appears prior
+        /// to the file specified by this parameter will be ignored.
         /// </param>
         /// <returns>
         /// The list ordered by name of all blockchain files that should be processed. 
-        /// In the list of blockchain files given by <param name="allBlockchainFiles" /> any blockchain files 
-        /// that appear prior to the file specified by <param name="firstBlockchainFileName" /> will be ignored.
+        /// In the list of blockchain files given any blockchain files 
+        /// that appear prior to the file specified by firstBlockchainFileName will be ignored.
         /// </returns>
         private static List<FileInfo> SelectFilesToProcess(IEnumerable<FileInfo> allBlockchainFiles, string firstBlockchainFileName)
         {

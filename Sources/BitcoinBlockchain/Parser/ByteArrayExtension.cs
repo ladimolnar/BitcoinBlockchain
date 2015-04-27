@@ -21,7 +21,10 @@ namespace BitcoinBlockchain.Parser
         /// The byte array that will be reversed.
         /// </param>
         /// <returns>
-        /// A reference to the same byte array that was provided in <param name="byteArray" /> that at the time of return is reversed.
+        /// A reference to the byte array parameter that was provided.
+        /// Note that this is not a reference to a new byte array, it is a reference
+        /// to the same byte array that was provided and that at return time has its 
+        /// content reversed.
         /// </returns>
         public static byte[] ReverseByteArray(this byte[] byteArray)
         {
