@@ -1,12 +1,13 @@
 # BitcoinBlockchain
 BitcoinBlockchain is a .NET Class Library that provides parsing functionality over files containing the Bitcoin blockchain.
 
-[[Prerequisites|Prerequisites]]
 
-[[API Usage|API Usage]]
+[Prerequisites](](../../wiki/Prerequisites)
 
-[[Performance Tips|Performance Tips]]
+[API Usage](../../wiki/API-Usage)
 
-[[NuGet Package|NuGet Package]]
+[Performance Tips](../../wiki/Performance-Tips)
 
-[[External Links|External Links]]
+[NuGet Package](../../wiki/NuGet-Package)
+
+[External Links](../../wiki/External-Links)
