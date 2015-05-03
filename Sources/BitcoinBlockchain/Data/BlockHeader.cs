@@ -15,20 +15,20 @@ namespace BitcoinBlockchain.Data
     public class BlockHeader
     {
         /// <summary>
-        /// Gets the block version number.
+        /// Gets or sets the block version number.
         /// </summary>
-        public UInt32 BlockVersion { get; internal set; }
+        public UInt32 BlockVersion { get; set; }
 
         /// <summary>
-        /// Gets the 256-bit hash of this block header.
+        /// Gets or sets the 256-bit hash of this block header.
         /// This ByteArray instance contains the hash in reverse order from what is the 
         /// normal result of hashing. This is to be consistent with sites like
         /// blockchain.info and blockexporer that display hashes in 'big endian' format.
         /// </summary>
-        public ByteArray BlockHash { get; internal set; }
+        public ByteArray BlockHash { get; set; }
 
         /// <summary>
-        /// Gets the 256-bit hash of the previous active block header.
+        /// Gets or sets the 256-bit hash of the previous active block header.
         /// This ByteArray instance contains the hash in reverse order from what is the 
         /// normal result of hashing. This is to be consistent with sites like
         /// blockchain.info and blockexporer that display hashes in 'big endian' format.
@@ -36,35 +36,35 @@ namespace BitcoinBlockchain.Data
         /// orphan block will not have PreviousBlockHash indicating the orphan block 
         /// but the previous active block.
         /// </summary>
-        public ByteArray PreviousBlockHash { get; internal set; }
+        public ByteArray PreviousBlockHash { get; set; }
 
         /// <summary>
-        /// Gets the 256-bit hash based on all transactions in the block.
+        /// Gets or sets the 256-bit hash based on all transactions in the block.
         /// This ByteArray instance contains the hash in reverse order from what is the 
         /// normal result of hashing. This is to be consistent with sites like
         /// blockchain.info and blockexporer that display hashes in 'big endian' format.
         /// </summary>
-        public ByteArray MerkleRootHash { get; internal set; }
+        public ByteArray MerkleRootHash { get; set; }
 
         /// <summary>
-        /// Gets the block creation timestamp as seconds since 1970-01-01T00:00 UTC.
+        /// Gets or sets the block creation timestamp as seconds since 1970-01-01T00:00 UTC.
         /// </summary>
-        public UInt32 BlockTimestampUnix { get; internal set; }
+        public UInt32 BlockTimestampUnix { get; set; }
 
         /// <summary>
-        /// Gets the block creation timestamp.
+        /// Gets or sets the block creation timestamp.
         /// </summary>
-        public DateTime BlockTimestamp { get; internal set; }
+        public DateTime BlockTimestamp { get;  set; }
 
         /// <summary>
-        /// Gets the block target difficulty.
+        /// Gets or sets the block target difficulty.
         /// </summary>
-        public UInt32 BlockTargetDifficulty { get; internal set; }
+        public UInt32 BlockTargetDifficulty { get;  set; }
 
         /// <summary>
-        /// Gets the block nonce. 
+        /// Gets or sets the block nonce. 
         /// See https://en.bitcoin.it/wiki/Nonce.
         /// </summary>
-        public uint BlockNonce { get; internal set; }
+        public uint BlockNonce { get;  set; }
     }
 }

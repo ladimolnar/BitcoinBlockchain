@@ -42,17 +42,17 @@ namespace BitcoinBlockchain.Data
         /// <summary>
         /// Gets the name of the blockchain file that contains the block being parsed.
         /// </summary>
-        public string BlockchainFileName { get; internal set; }
+        public string BlockchainFileName { get; private set; }
 
         /// <summary>
-        /// Gets a percentage indicating how much of the current blockchain file was processed.
+        /// Gets or sets a percentage indicating how much of the current blockchain file was processed.
         /// </summary>
-        public int PercentageOfCurrentBlockchainFile { get; internal set; }
+        public int PercentageOfCurrentBlockchainFile { get; set; }
 
         /// <summary>
         /// Gets the block header information.
         /// </summary>
-        public BlockHeader BlockHeader { get; internal set; }
+        public BlockHeader BlockHeader { get; private set; }
 
         /// <summary>
         /// Gets the read-only collection of transactions in this Bitcoin block.
@@ -81,7 +81,7 @@ namespace BitcoinBlockchain.Data
         /// <param name="transaction">
         /// The Bitcoin transaction to be added to the list of transactions.
         /// </param>
-        internal void AddTransaction(Transaction transaction)
+        public void AddTransaction(Transaction transaction)
         {
             this.transactions.Add(transaction);
         }

@@ -39,26 +39,26 @@ namespace BitcoinBlockchain.Data
         }
 
         /// <summary>
-        /// Gets the 256 bit hash of this transaction.
+        /// Gets or sets the 256 bit hash of this transaction.
         /// The hash is calculated for the block of memory that contains the entire transaction, 
         /// from transaction version number to the transaction lock time.
         /// This ByteArray instance contains the hash in reverse order from what is the 
         /// normal result of hashing. This is to be consistent with sites like
         /// blockchain.info and blockexporer that display hashes in 'big endian' format.
         /// </summary>
-        public ByteArray TransactionHash { get; internal set; }
+        public ByteArray TransactionHash { get; set; }
 
         /// <summary>
-        /// Gets the transaction version.
+        /// Gets or sets the transaction version.
         /// </summary>
-        public UInt32 TransactionVersion { get; internal set; }
+        public UInt32 TransactionVersion { get; set; }
 
         /// <summary>
-        /// Gets the transaction lock time.
+        /// Gets or sets the transaction lock time.
         /// If non-zero and sequence numbers are less than 0xFFFFFFFF then it represents 
         /// the block height or the timestamp when transaction is final.
         /// </summary>
-        public UInt32 TransactionLockTime { get; internal set; }
+        public UInt32 TransactionLockTime { get; set; }
 
         /// <summary>
         /// Gets the read-only collection of transaction inputs in this transaction.
@@ -76,7 +76,7 @@ namespace BitcoinBlockchain.Data
         /// <param name="transactionInput">
         /// The transaction input to be added to the list of transaction inputs.
         /// </param>
-        internal void AddInput(TransactionInput transactionInput)
+        public void AddInput(TransactionInput transactionInput)
         {
             this.transactionInputs.Add(transactionInput);
         }
@@ -87,7 +87,7 @@ namespace BitcoinBlockchain.Data
         /// <param name="transactionOutput">
         /// The transaction output to be added to the list of transaction outputs.
         /// </param>
-        internal void AddOutput(TransactionOutput transactionOutput)
+        public void AddOutput(TransactionOutput transactionOutput)
         {
             this.transactionOutputs.Add(transactionOutput);
         }

@@ -33,10 +33,17 @@ namespace BitcoinBlockchain.Data
         private readonly byte[] byteArrayValue;
 
         /// <summary>
+        /// Indicates whether the hash code was calculated yet or not.
+        /// </summary>
+        private bool isHashCodeCalculated;
+
+        /// <summary>
         /// Cached value for the result of GetHashCode. 
         /// Having this allows us to avoid recalculating the hash code every time GetHashCode is called.
+        /// Note: initially we used a Lazy instance but the memory footprint for Lazy is too large so we 
+        ///       eventually replaced this with a simple integer and a boolean flag: isHashCodeCalculated.
         /// </summary>
-        private readonly Lazy<int> hashCode;
+        private int hashCode;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ByteArray"/> class.
@@ -54,7 +61,7 @@ namespace BitcoinBlockchain.Data
             this.byteArrayValue = new byte[sourceByteArray.Length];
             Buffer.BlockCopy(sourceByteArray, 0, this.byteArrayValue, 0, sourceByteArray.Length);
 
-            this.hashCode = new Lazy<int>(this.CalculateHashCode);
+            this.isHashCodeCalculated = false;
         }
 
         /// <summary>
@@ -151,6 +158,8 @@ namespace BitcoinBlockchain.Data
             return this == byteArray;
         }
 
+        // ReSharper disable NonReadonlyFieldInGetHashCode
+
         /// <summary>
         /// Returns the hash code for this instance.
         /// </summary>
@@ -159,7 +168,13 @@ namespace BitcoinBlockchain.Data
         /// </returns>
         public override int GetHashCode()
         {
-            return this.hashCode.Value;
+            if (this.isHashCodeCalculated == false)
+            {
+                this.hashCode = this.CalculateHashCode();
+                this.isHashCodeCalculated = true;
+            }
+
+            return this.hashCode;
         }
 
         /// <summary>

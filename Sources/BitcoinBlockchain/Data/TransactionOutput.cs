@@ -16,13 +16,13 @@ namespace BitcoinBlockchain.Data
     public class TransactionOutput
     {
         /// <summary>
-        /// Gets the value for this output in Satoshi.
+        /// Gets or sets the value for this output in Satoshi.
         /// </summary>
-        public UInt64 OutputValueSatoshi { get; internal set; }
+        public UInt64 OutputValueSatoshi { get; set; }
 
         /// <summary>
-        /// Gets the output's script.
+        /// Gets or sets the output's script.
         /// </summary>
-        public ByteArray OutputScript { get; internal set; }
+        public ByteArray OutputScript { get; set; }
     }
 }
