@@ -56,11 +56,19 @@ namespace BitcoinBlockchainTest
             //    you will have to do that on your own.
             // 2. An instance of type BitcoinBlockchain.Data.Block holds information
             //    about all its transactions, inputs and outputs and it can use a lot of memory.
-            //    Tray to make sure that after you process a block, you do not keep it around in
-            //    memory. For example do not simply collect instances of type 
-            //    BitcoinBlockchain.Data.Block in a list. That would consume huge amounts of memory.
+            //    After you are done processing a block do not keep it around in memory. 
+            //    For example do not simply collect all instances of type BitcoinBlockchain.Data.Block 
+            //    in a list. That would consume huge amounts of memory.
             // 3. If during processing you need to store so much information that you expect to
-            //    exceed 2 GB of memory, make sure you build your tool for the x64 configuration.
+            //    exceed 2 GB of memory, build your tool for the x64 configuration.
+            // 4. To improve the performance of your application you may want to dispatch the processing 
+            //    of a block on a background thread. 
+            //    If you do that however you need to account for the fact that multiple blocks will 
+            //    be processed concurrently. You have to be prepared to deal with various multi-threading 
+            //    aspects. For example a transaction input may end up being processed before the output 
+            //    it links to. You may want to consider a hybrid approach where some of the processing 
+            //    for a block is done on the main thread and some of the processing is dispatched on a 
+            //    background thread.
             foreach (Block block in blockchainParser.ParseBlockchain())
             {
                 if (currentBlockchainFile != block.BlockchainFileName)
