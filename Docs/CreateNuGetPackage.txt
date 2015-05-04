@@ -17,6 +17,7 @@ Created 'BitcoinBlockchain.nuspec' successfully.
     <licenseUrl>https://raw.githubusercontent.com/ladimolnar/BitcoinBlockchain/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/ladimolnar/BitcoinBlockchain/wiki</projectUrl>
     <tags>Bitcoin blockchain parser</tags>
+
     <releaseNotes>... PROVIDE RELEASE NOTES ...</releaseNotes>
 
     DELETE <iconUrl>
