@@ -1,0 +1,62 @@
+-------------------------------------
+. Rebuild Release.
+
+-------------------------------------
+. CD E:\Sources\GitHub\BitcoinBlockchain\Workspace_1\Sources\BitcoinBlockchain
+
+. Delete old NuGet files: 
+del *.nupkg
+del *.nuspec
+
+-------------------------------------
+. nuget spec
+Created 'BitcoinBlockchain.nuspec' successfully.
+
+-------------------------------------
+. At this point manually edit BitcoinBlockchain.nuspec
+    <licenseUrl>https://raw.githubusercontent.com/ladimolnar/BitcoinBlockchain/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/ladimolnar/BitcoinBlockchain/wiki</projectUrl>
+    <tags>Bitcoin blockchain parser</tags>
+    <releaseNotes>... PROVIDE RELEASE NOTES ...</releaseNotes>
+
+    DELETE <iconUrl>
+
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://raw.githubusercontent.com/ladimolnar/BitcoinBlockchain/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/ladimolnar/BitcoinBlockchain/wiki</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>This is the initial release.</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>Bitcoin blockchain parser</tags>
+  </metadata>
+</package>
+
+-------------------------------------
+. nuget pack -sym BitcoinBlockchain.csproj -Properties Configuration=Release
+Attempting to build package from 'BitcoinBlockchain.csproj'.
+Packing files from 'E:\Sources\GitHub\BitcoinBlockchain\Workspace_1\Sources\BitcoinBlockchain\bin\Release'.
+Using 'BitcoinBlockchain.nuspec' for metadata.
+Successfully created package 'E:\Sources\GitHub\BitcoinBlockchain\Workspace_1\Sources\BitcoinBlockchain\BitcoinBlockchain.1.0.0.0.nupkg'.
+
+Attempting to build symbols package for 'BitcoinBlockchain.csproj'.
+Packing files from 'E:\Sources\GitHub\BitcoinBlockchain\Workspace_1\Sources\BitcoinBlockchain\bin\Release'.
+Using 'BitcoinBlockchain.nuspec' for metadata.
+Successfully created package 'E:\Sources\GitHub\BitcoinBlockchain\Workspace_1\Sources\BitcoinBlockchain\BitcoinBlockchain.1.0.0.0.symbols.nupkg'.
+
+-------------------------------------
+. Push the package. Make sure you replace .M.m.p.0.nupkg with the current value.
+
+nuget push BitcoinBlockchain.M.m.p.0.nupkg <key...>
+Pushing BitcoinBlockchain 1.0.0.0 to the NuGet gallery (https://www.nuget.org)...
+Your package was pushed.
+Pushing BitcoinBlockchain 1.0.0.0 to the symbol server (http://nuget.gw.symbolsource.org/Public/NuGet)...
+Your package was pushed.
+
