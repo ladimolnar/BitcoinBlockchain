@@ -7,11 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitcoinBlockchain", "Bitcoi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitcoinBlockchainTest", "BitcoinBlockchainTest\BitcoinBlockchainTest.csproj", "{0B6FA326-E9B6-429C-A93C-34EF4AC4EB11}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{351FBF34-6F71-4DEA-8A86-5AB8EB0581C9}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\Docs\Todo.txt = ..\..\Docs\Todo.txt
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
