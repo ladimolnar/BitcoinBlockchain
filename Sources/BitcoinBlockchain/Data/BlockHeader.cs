@@ -32,8 +32,8 @@ namespace BitcoinBlockchain.Data
         /// This ByteArray instance contains the hash in reverse order from what is the 
         /// normal result of hashing. This is to be consistent with sites like
         /// blockchain.info and blockexporer that display hashes in 'big endian' format.
-        /// Note that orphan blocks will be skipped. In other words a block following an
-        /// orphan block will not have PreviousBlockHash indicating the orphan block 
+        /// Note that stale blocks will be skipped. In other words a block following a
+        /// stale block will not have PreviousBlockHash indicating the stale block 
         /// but the previous active block.
         /// </summary>
         public ByteArray PreviousBlockHash { get; set; }

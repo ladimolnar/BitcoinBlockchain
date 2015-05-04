@@ -50,9 +50,9 @@ namespace BitcoinBlockchainTest
             // process each block that is returned by the parser.
             // The parser exposes the blocks it parses via an "IEnumerable<Block>".
             // TIPS: 
-            // 1. Make sure that you are aware of the concept of orphan blocks.
-            //    Depending on what your processing does, including the orphan blocks could lead
-            //    to incorrect results. Detecting orphan blocks is not facilitated by the parser,
+            // 1. Make sure that you are aware of the concept of stale blocks.
+            //    Depending on what your processing does, including the stale blocks could lead
+            //    to incorrect results. Detecting stale blocks is not facilitated by the parser,
             //    you will have to do that on your own.
             // 2. An instance of type BitcoinBlockchain.Data.Block holds information
             //    about all its transactions, inputs and outputs and it can use a lot of memory.
