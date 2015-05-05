@@ -50,18 +50,13 @@ namespace BitcoinBlockchainTest
             // process each block that is returned by the parser.
             // The parser exposes the blocks it parses via an "IEnumerable<Block>".
             // TIPS: 
-            // 1. Make sure that you are aware of the concept of stale blocks.
-            //    Depending on what your processing does, including the stale blocks could lead
-            //    to incorrect results. Detecting stale blocks is not facilitated by the parser,
-            //    you will have to do that on your own.
-            // 2. An instance of type BitcoinBlockchain.Data.Block holds information
+            // 1. An instance of type BitcoinBlockchain.Data.Block holds information
             //    about all its transactions, inputs and outputs and it can use a lot of memory.
             //    After you are done processing a block do not keep it around in memory. 
             //    For example do not simply collect all instances of type BitcoinBlockchain.Data.Block 
             //    in a list. That would consume huge amounts of memory.
-            // 3. If during processing you need to store so much information that you expect to
-            //    exceed 2 GB of memory, build your tool for the x64 configuration.
-            // 4. To improve the performance of your application you may want to dispatch the processing 
+            //
+            // 2. To improve the performance of your application you may want to dispatch the processing 
             //    of a block on a background thread. 
             //    If you do that however you need to account for the fact that multiple blocks will 
             //    be processed concurrently. You have to be prepared to deal with various multi-threading 
@@ -69,6 +64,20 @@ namespace BitcoinBlockchainTest
             //    it links to. You may want to consider a hybrid approach where some of the processing 
             //    for a block is done on the main thread and some of the processing is dispatched on a 
             //    background thread.
+            //
+            // 3. If during processing you need to store so much information that you expect to
+            //    exceed 2 GB of memory, build your tool for the x64 configuration.
+            //
+            // 4. Make sure that you are aware of the concept of stale blocks.
+            //    Depending on what your processing does, not accounting for stale blocks could 
+            //    lead to incorrect results. The parser has no way to know that a block is stale 
+            //    when it encounters it. It will enumerate it to you and you will have the chance 
+            //    to detect the stale blocks once the parsing of all blocks is complete. 
+            //    See:
+            //          https://bitcoin.org/en/developer-guide#orphan-blocks
+            //          https://bitcoin.org/en/glossary/stale-block
+            //          https://bitcoin.org/en/glossary/orphan-block
+            //          http://bitcoin.stackexchange.com/questions/5859/what-are-orphaned-and-stale-blocks
             foreach (Block block in blockchainParser.ParseBlockchain())
             {
                 if (currentBlockchainFile != block.BlockchainFileName)
