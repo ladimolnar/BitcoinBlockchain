@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace BitcoinBlockchainTest
+namespace BitcoinBlockchainSample
 {
     public class BlockchainStatistics
     {

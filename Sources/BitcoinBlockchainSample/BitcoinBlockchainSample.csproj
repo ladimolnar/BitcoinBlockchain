@@ -7,8 +7,8 @@
     <ProjectGuid>{0B6FA326-E9B6-429C-A93C-34EF4AC4EB11}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BitcoinBlockchainTest</RootNamespace>
-    <AssemblyName>BitcoinBlockchainTest</AssemblyName>
+    <RootNamespace>BitcoinBlockchainSample</RootNamespace>
+    <AssemblyName>BitcoinBlockchainSample</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -21,7 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>BitcoinBlockchainTest.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>BitcoinBlockchainSample.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -39,7 +39,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>BitcoinBlockchainTest.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>BitcoinBlockchainSample.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">

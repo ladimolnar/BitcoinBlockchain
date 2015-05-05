@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace BitcoinBlockchainTest
+namespace BitcoinBlockchainSample
 {
     using System;
     using BitcoinBlockchain.Data;
@@ -16,7 +16,7 @@ namespace BitcoinBlockchainTest
         {
             if (args.Length != 1)
             {
-                Console.Error.WriteLine("Invalid command line. Run \"BitcoinBlockchainTest /?\" for usage.");
+                Console.Error.WriteLine("Invalid command line. Run \"BitcoinBlockchainSample /?\" for usage.");
             }
             else
             {
@@ -115,12 +115,12 @@ namespace BitcoinBlockchainTest
 
         private static void TypeHelp()
         {
-            Console.WriteLine("BitcoinBlockchainTest");
+            Console.WriteLine("BitcoinBlockchainSample");
             Console.WriteLine("    This is a sample/test application used to exercise");
             Console.WriteLine("    basic functions of the BitcoinBlockchain class library.");
             Console.WriteLine();
             Console.WriteLine("USAGE:");
-            Console.WriteLine("    BitcoinBlockchainTest.exe /? | Path_To_Blockchain_Files");
+            Console.WriteLine("    BitcoinBlockchainSample.exe /? | Path_To_Blockchain_Files");
         }
     }
 }

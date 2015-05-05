@@ -1,6 +1,6 @@
 Sources/BitcoinBlockchain/bin/
 Sources/BitcoinBlockchain/obj/
-Sources/BitcoinBlockchainTest/bin/
-Sources/BitcoinBlockchainTest/obj/
+Sources/BitcoinBlockchainSample/obj/
+Sources/BitcoinBlockchainSample/bin/
 *.nupkg
 *.nuspec
