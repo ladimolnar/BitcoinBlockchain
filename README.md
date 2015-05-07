@@ -11,3 +11,10 @@ BitcoinBlockchain is a .NET Class Library that provides parsing functionality ov
 [NuGet Package](../../wiki/NuGet-Package)
 
 [External Links](../../wiki/External-Links)
+
+***
+
+**Related project**
+
+[BitcoinBlockchain](https://github.com/ladimolnar/BitcoinDatabaseGenerator) is a high performance data transfer tool that can be used to copy data from Bitcoin Core blockchain files to a SQL Server database.
+
