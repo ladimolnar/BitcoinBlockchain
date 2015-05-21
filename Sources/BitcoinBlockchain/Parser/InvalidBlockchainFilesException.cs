@@ -11,7 +11,9 @@ namespace BitcoinBlockchain.Parser
 
     /// <summary>
     /// The exception that is thrown when the list of Bitcoin blockchain files is found to be invalid.
-    /// Note that this is referring only to the list of file names and not to the files content.
+    /// The blockchain folder must contain files named with the pattern "blkxxxxx.dat", 
+    /// starting from "blk00000.dat" and with no gaps in the numeric section.
+    /// Note that this exception is referring only to the file names and not to the files content.
     /// </summary>
     [Serializable]
     public class InvalidBlockchainFilesException : Exception

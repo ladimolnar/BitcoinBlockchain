@@ -48,8 +48,10 @@ namespace BitcoinBlockchain.Parser
         /// The path to the folder containing the blockchain files.
         /// </param>
         /// <exception cref="InvalidBlockchainFilesException">
-        /// The exception that is thrown when the list of Bitcoin blockchain files is found to be invalid.
-        /// Note that this is referring only to the list of file names and not to the files content.
+        /// Thrown when the list of Bitcoin blockchain files is found to be invalid.
+        /// The blockchain folder must contain files named with the pattern "blkxxxxx.dat", 
+        /// starting from "blk00000.dat" and with no gaps in the numeric section.
+        /// Note that this exception is referring only to the file names and not to the files content.
         /// </exception>
         public BlockchainParser(string blockchainPath)
             : this(GetBlockchainFiles(GetFileInfoList(blockchainPath, null)))
@@ -69,8 +71,10 @@ namespace BitcoinBlockchain.Parser
         /// If null then all file from the series of blockchain files will be processed.
         /// </param>
         /// <exception cref="InvalidBlockchainFilesException">
-        /// The exception that is thrown when the list of Bitcoin blockchain files is found to be invalid.
-        /// Note that this is referring only to the list of file names and not to the files content.
+        /// Thrown when the list of Bitcoin blockchain files is found to be invalid.
+        /// The blockchain folder must contain files named with the pattern "blkxxxxx.dat", 
+        /// starting from "blk00000.dat" and with no gaps in the numeric section.
+        /// Note that this exception is referring only to the file names and not to the files content.
         /// </exception>
         public BlockchainParser(string blockchainPath, string firstBlockchainFileName)
             : this(GetBlockchainFiles(GetFileInfoList(blockchainPath, firstBlockchainFileName)))
@@ -89,11 +93,11 @@ namespace BitcoinBlockchain.Parser
         }
 
         /// <summary>
-        /// Parses the Bitcoin blockchain and returns an <see cref="IEnumerable&lt;Block&gt;"/>.
+        /// Parses the Bitcoin blockchain and returns a <see cref="IEnumerable&lt;Block&gt;"/>.
         /// Each element contains information about one Bitcoin block.
         /// </summary>
         /// <returns>
-        /// An <see cref="IEnumerable&lt;Block&gt;"/>.
+        /// A <see cref="IEnumerable&lt;Block&gt;"/>.
         /// Each element contains information about one Bitcoin block.
         /// </returns>
         public IEnumerable<Block> ParseBlockchain()
@@ -375,8 +379,10 @@ namespace BitcoinBlockchain.Parser
         /// The name of the first blockchain file that should be processed from the series of blockchain files. 
         /// </param>
         /// <exception cref="InvalidBlockchainFilesException">
-        /// The exception that is thrown when the list of Bitcoin blockchain files is found to be invalid.
-        /// Note that this is referring only to the list of file names and not to the files content.
+        /// Thrown when the list of Bitcoin blockchain files is found to be invalid.
+        /// The blockchain folder must contain files named with the pattern "blkxxxxx.dat", 
+        /// starting from "blk00000.dat" and with no gaps in the numeric section.
+        /// Note that this exception is referring only to the file names and not to the files content.
         /// </exception>
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", Justification = "blk and dat refer to file names and extensions")]
         private static void ValidateBlockchainFiles(List<FileInfo> blockchainFiles, string firstBlockchainFileName)

@@ -15,11 +15,11 @@ namespace BitcoinBlockchain.Parser
     public interface IBlockchainParser
     {
         /// <summary>
-        /// Parses the Bitcoin blockchain and returns an <see cref="IEnumerable&lt;Block&gt;"/>.
+        /// Parses the Bitcoin blockchain and returns a <see cref="IEnumerable&lt;Block&gt;"/>.
         /// Each element contains information about one Bitcoin block.
         /// </summary>
         /// <returns>
-        /// An <see cref="IEnumerable&lt;Block&gt;"/>.
+        /// A <see cref="IEnumerable&lt;Block&gt;"/>.
         /// Each element contains information about one Bitcoin block.
         /// </returns>
         IEnumerable<Block> ParseBlockchain();

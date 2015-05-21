@@ -15,8 +15,8 @@ namespace BitcoinBlockchain.Data
     /// Because ByteArray implements GetHashCode and Equals based on the content of the byte array that is being wrapped, 
     /// it can be used as a key in a dictionary. 
     /// Note that the C# Array do not overwrite GetHashCode. Two byte arrays with identical content will 
-    /// generate different values for GetHashCode. That prevents a byte array from being used directly 
-    /// as a key in a dictionary.
+    /// generate different values for GetHashCode. That prevents a C# byte array from being used directly 
+    /// as a key in a dictionary. ByteArray can be used in that situation.
     /// </summary>
     [type: CLSCompliant(true)]
     public class ByteArray
