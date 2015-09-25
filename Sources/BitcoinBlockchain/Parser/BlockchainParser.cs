@@ -132,7 +132,14 @@ namespace BitcoinBlockchain.Parser
             blockHeader.BlockVersion = blockMemoryStreamReader.ReadUInt32();
 
             // TODO: We need to understand better what is different in V2 and V3.
-            if (blockHeader.BlockVersion != 1 && blockHeader.BlockVersion != 2 && blockHeader.BlockVersion != 3)
+
+            // For version 0x20000007 see:
+            //      - https://github.com/bitcoin/bips/blob/master/bip-0101.mediawiki
+            //      - https://gist.github.com/sipa/bf69659f43e763540550
+            if (blockHeader.BlockVersion != 1 && 
+                blockHeader.BlockVersion != 2 && 
+                blockHeader.BlockVersion != 3 && 
+                blockHeader.BlockVersion != 0x20000007)
             {
                 throw new UnknownBlockVersionException(string.Format(CultureInfo.InvariantCulture, "Unknown block version: {0}.", blockHeader.BlockVersion));
             }
