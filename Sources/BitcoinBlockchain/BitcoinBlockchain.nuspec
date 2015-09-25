@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://raw.githubusercontent.com/ladimolnar/BitcoinBlockchain/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/ladimolnar/BitcoinBlockchain/wiki</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Accommodate for block version 0x20000007. See: https://github.com/bitcoin/bips/blob/master/bip-0101.mediawiki and https://gist.github.com/sipa/bf69659f43e763540550. </releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>Bitcoin blockchain parser</tags>
+  </metadata>
+</package>

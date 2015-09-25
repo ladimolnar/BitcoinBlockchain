@@ -3,4 +3,3 @@ Sources/BitcoinBlockchain/obj/
 Sources/BitcoinBlockchainSample/obj/
 Sources/BitcoinBlockchainSample/bin/
 *.nupkg
-*.nuspec
