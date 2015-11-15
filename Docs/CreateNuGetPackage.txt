@@ -83,3 +83,10 @@ Update Version and Rebuild
 
 . Browse to https://www.nuget.org/packages/BitcoinBlockchain/ to verify that the package was successfully pushed
 
+-------------------------------------
+. Commit in Git 
+-------------------------------------
+
+. Commit in Git.
+. Create a new Git Tag with the format: NuGet_M.m.p.0
+
