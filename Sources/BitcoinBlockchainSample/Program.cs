@@ -46,6 +46,10 @@ namespace BitcoinBlockchainSample
             //      in different scenarios.
             IBlockchainParser blockchainParser = new BlockchainParser(pathToBlockchain);
 
+            // Call blockchainParser.SetBlockId is the blockchain uses a value different than the standard one 
+            // for the "BlockId" field of each block. For example on testnet / testnet3.
+            // blockchainParser.SetBlockId(0x0709110B);
+
             // Start the parsing process by calling blockchainParser.ParseBlockchain() and
             // process each block that is returned by the parser.
             // The parser exposes the blocks it parses via an "IEnumerable<Block>".

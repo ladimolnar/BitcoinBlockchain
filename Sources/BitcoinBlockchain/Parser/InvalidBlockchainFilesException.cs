@@ -7,6 +7,7 @@
 namespace BitcoinBlockchain.Parser
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.Serialization;
 
     /// <summary>
@@ -15,6 +16,8 @@ namespace BitcoinBlockchain.Parser
     /// starting from "blk00000.dat" and with no gaps in the numeric section.
     /// Note that this exception is referring only to the file names and not to the files content.
     /// </summary>
+    [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", Justification = "blk and dat refer to file names and extensions")]
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "blk and dat refer to file names and extensions.")]
     [Serializable]
     public class InvalidBlockchainFilesException : Exception
     {

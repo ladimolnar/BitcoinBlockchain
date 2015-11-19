@@ -6,6 +6,7 @@
 
 namespace BitcoinBlockchain.Parser
 {
+    using System;
     using System.Collections.Generic;
     using BitcoinBlockchain.Data;
 
@@ -23,5 +24,12 @@ namespace BitcoinBlockchain.Parser
         /// Each element contains information about one Bitcoin block.
         /// </returns>
         IEnumerable<Block> ParseBlockchain();
+
+        /// <summary>
+        /// Sets the value that will be used to check against the BlockId of each block.
+        /// If this method is not called then the default value of 0xD9B4BEF9 will be used.
+        /// </summary>
+        /// <param name="blockId">The value that will be used to check against the BlockId of each block.</param>
+        void SetBlockId(UInt32 blockId);
     }
 }

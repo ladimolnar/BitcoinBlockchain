@@ -34,12 +34,17 @@ namespace BitcoinBlockchain.Parser
         /// <summary>
         /// The "magic" ID of each Bitcoin block.
         /// </summary>
-        private const UInt32 BlockMagicId = 0xD9B4BEF9;
+        private const UInt32 DefaultBlockMagicId = 0xD9B4BEF9;
 
         /// <summary>
         /// An enumerable providing access to a set of BlockchainFile instances, each representing a Bitcoin blockchain file.
         /// </summary>
         private readonly IEnumerable<BlockchainFile> blockchainFilesEnumerator;
+
+        /// <summary>
+        /// The "magic" ID of each Bitcoin block.
+        /// </summary>
+        private UInt32 blockMagicId = DefaultBlockMagicId;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlockchainParser" /> class.
@@ -53,6 +58,8 @@ namespace BitcoinBlockchain.Parser
         /// starting from "blk00000.dat" and with no gaps in the numeric section.
         /// Note that this exception is referring only to the file names and not to the files content.
         /// </exception>
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", Justification = "blk and dat refer to file names and extensions")]
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "blk and dat refer to file names and extensions.")]
         public BlockchainParser(string blockchainPath)
             : this(GetBlockchainFiles(GetFileInfoList(blockchainPath, null)))
         {
@@ -76,6 +83,8 @@ namespace BitcoinBlockchain.Parser
         /// starting from "blk00000.dat" and with no gaps in the numeric section.
         /// Note that this exception is referring only to the file names and not to the files content.
         /// </exception>
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", Justification = "blk and dat refer to file names and extensions")]
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "blk and dat refer to file names and extensions.")]
         public BlockchainParser(string blockchainPath, string firstBlockchainFileName)
             : this(GetBlockchainFiles(GetFileInfoList(blockchainPath, firstBlockchainFileName)))
         {
@@ -90,6 +99,16 @@ namespace BitcoinBlockchain.Parser
         public BlockchainParser(IEnumerable<BlockchainFile> blockchainFilesEnumerator)
         {
             this.blockchainFilesEnumerator = blockchainFilesEnumerator;
+        }
+
+        /// <summary>
+        /// Sets the value that will be used to check against the BlockId of each block.
+        /// If this method is not called then the default value of 0xD9B4BEF9 will be used.
+        /// </summary>
+        /// <param name="blockId">The value that will be used to check against the BlockId of each block.</param>
+        public void SetBlockId(UInt32 blockId)
+        {
+            this.blockMagicId = blockId;
         }
 
         /// <summary>
@@ -282,39 +301,6 @@ namespace BitcoinBlockchain.Parser
         }
 
         /// <summary>
-        /// Parses one Bitcoin block.
-        /// </summary>
-        /// <param name="blockchainFileName">
-        /// The name of the blockchain file that contains the block being parsed.
-        /// </param>
-        /// <param name="binaryReader">
-        /// Provides access to a Bitcoin blockchain file.
-        /// </param>
-        private static Block ParseBlockchainFile(string blockchainFileName, BinaryReader binaryReader)
-        {
-            // There are some rare situations where a block is preceded by a section containing zero bytes. 
-            if (binaryReader.SkipZeroBytes() == false)
-            {
-                // We reached the end of the file. There is no block to be parsed.
-                return null;
-            }
-
-            UInt32 blockId = binaryReader.ReadUInt32();
-            if (blockId != BlockMagicId)
-            {
-                throw new InvalidBlockchainContentException(string.Format(CultureInfo.InvariantCulture, "Invalid block Id: {0:X}. Expected: {1:X}", blockId, BlockMagicId));
-            }
-
-            int blockLength = (int)binaryReader.ReadUInt32();
-            byte[] blockBuffer = binaryReader.ReadBytes(blockLength);
-
-            using (BlockMemoryStreamReader blockMemoryStreamReader = new BlockMemoryStreamReader(blockBuffer))
-            {
-                return BlockchainParser.InternalParseBlockchainFile(blockchainFileName, blockMemoryStreamReader);
-            }
-        }
-
-        /// <summary>
         /// Parses one Bitcoin block except for a few fields before the actual block header.
         /// </summary>
         /// <param name="blockchainFileName">
@@ -393,6 +379,7 @@ namespace BitcoinBlockchain.Parser
         /// Note that this exception is referring only to the file names and not to the files content.
         /// </exception>
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", Justification = "blk and dat refer to file names and extensions")]
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "blk and dat refer to file names and extensions.")]
         private static void ValidateBlockchainFiles(List<FileInfo> blockchainFiles, string firstBlockchainFileName)
         {
             bool lastKnownBlockchainFileFound = false;
@@ -482,6 +469,39 @@ namespace BitcoinBlockchain.Parser
         }
 
         /// <summary>
+        /// Parses one Bitcoin block.
+        /// </summary>
+        /// <param name="blockchainFileName">
+        /// The name of the blockchain file that contains the block being parsed.
+        /// </param>
+        /// <param name="binaryReader">
+        /// Provides access to a Bitcoin blockchain file.
+        /// </param>
+        private Block ParseBlockchainFile(string blockchainFileName, BinaryReader binaryReader)
+        {
+            // There are some rare situations where a block is preceded by a section containing zero bytes. 
+            if (binaryReader.SkipZeroBytes() == false)
+            {
+                // We reached the end of the file. There is no block to be parsed.
+                return null;
+            }
+
+            UInt32 blockId = binaryReader.ReadUInt32();
+            if (blockId != this.blockMagicId)
+            {
+                throw new InvalidBlockchainContentException(string.Format(CultureInfo.InvariantCulture, "Invalid block Id: {0:X}. Expected: {1:X}", blockId, this.blockMagicId));
+            }
+
+            int blockLength = (int)binaryReader.ReadUInt32();
+            byte[] blockBuffer = binaryReader.ReadBytes(blockLength);
+
+            using (BlockMemoryStreamReader blockMemoryStreamReader = new BlockMemoryStreamReader(blockBuffer))
+            {
+                return BlockchainParser.InternalParseBlockchainFile(blockchainFileName, blockMemoryStreamReader);
+            }
+        }
+
+        /// <summary>
         /// Parses one Bitcoin blockchain file.
         /// </summary>
         /// <param name="blockchainFile">
@@ -496,7 +516,7 @@ namespace BitcoinBlockchain.Parser
 
             while (binaryReader.BaseStream.Position < binaryReader.BaseStream.Length)
             {
-                Block block = BlockchainParser.ParseBlockchainFile(blockchainFile.FileName, binaryReader);
+                Block block = this.ParseBlockchainFile(blockchainFile.FileName, binaryReader);
                 if (block != null)
                 {
                     block.PercentageOfCurrentBlockchainFile = (int)(100 * binaryReader.BaseStream.Position / binaryReader.BaseStream.Length);
