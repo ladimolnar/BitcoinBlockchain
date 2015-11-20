@@ -2,7 +2,12 @@
 Update Version and Rebuild
 -------------------------------------
 
-. Determine the new version. For versioning rules see: 
+. Determine the new version. 
+  Given a version number MAJOR.MINOR.PATCH, increment the:
+    1.MAJOR version when you make incompatible API changes,
+    2.MINOR version when you add functionality in a backwards-compatible manner, and
+    3.PATCH version when you make backwards-compatible bug fixes.
+  For more on versioning rules see: 
     - http://docs.nuget.org/Create/Versioning
     - http://semver.org/
 
@@ -31,11 +36,11 @@ Update Version and Rebuild
     <licenseUrl>https://raw.githubusercontent.com/ladimolnar/BitcoinBlockchain/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/ladimolnar/BitcoinBlockchain/wiki</projectUrl>
     <tags>Bitcoin blockchain parser</tags>
-
     <releaseNotes>... PROVIDE RELEASE NOTES ...</releaseNotes>
 
   - Delete the node <iconUrl>
-    BitcoinBlockchain.nuspec should look something like this:
+
+    At this point BitcoinBlockchain.nuspec should look something like this:
         <?xml version="1.0"?>
         <package >
           <metadata>
