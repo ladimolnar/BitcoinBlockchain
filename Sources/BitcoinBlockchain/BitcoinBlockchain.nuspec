@@ -10,8 +10,8 @@
     <projectUrl>https://github.com/ladimolnar/BitcoinBlockchain/wiki</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Allow the client code to configure the value that will be used to check against the BlockId of each block.</releaseNotes>
-    <copyright>Copyright 2015</copyright>
+    <releaseNotes>Accommodate for block version 0x30000000.</releaseNotes>
+    <copyright>Copyright 2016</copyright>
     <tags>Bitcoin blockchain parser</tags>
   </metadata>
 </package>

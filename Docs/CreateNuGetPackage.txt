@@ -1,4 +1,13 @@
 -------------------------------------
+Prerequisites
+-------------------------------------
+
+. You will have to use the NuGet.exe command line tool. Install the command line NuGet.exe from:
+  https://dist.nuget.org/index.html
+. Make sure NuGet.exe is in PATH
+
+
+-------------------------------------
 Update Version and Rebuild
 -------------------------------------
 
