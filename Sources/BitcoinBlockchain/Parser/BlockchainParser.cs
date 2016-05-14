@@ -157,7 +157,9 @@ namespace BitcoinBlockchain.Parser
                 blockHeader.BlockVersion != 3 &&
                 blockHeader.BlockVersion != 0x20000007 &&
                 blockHeader.BlockVersion != 0x30000000 &&
-                blockHeader.BlockVersion != 4)
+                blockHeader.BlockVersion != 4 &&
+                blockHeader.BlockVersion != 0x20000000 &&
+                blockHeader.BlockVersion != 0x20000001)
             {
                 throw new UnknownBlockVersionException(string.Format(CultureInfo.InvariantCulture, "Unknown block version: {0}.", blockHeader.BlockVersion));
             }
