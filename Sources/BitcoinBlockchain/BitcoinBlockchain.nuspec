@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <package >
-    <metadata>
-        <id>$id$</id>
-        <version>$version$</version>
-        <title>$title$</title>
-        <authors>$author$</authors>
-        <owners>$author$</owners>
-        <licenseUrl>https://raw.githubusercontent.com/ladimolnar/BitcoinBlockchain/master/LICENSE</licenseUrl>
-        <projectUrl>https://github.com/ladimolnar/BitcoinBlockchain/wiki</projectUrl>
-        <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>$description$</description>
-        <releaseNotes>Accommodate for block versions 0x8000004 (134217732) and 0x30000001 (805306369).</releaseNotes>
-        <copyright>Copyright 2016</copyright>
-        <tags>Bitcoin blockchain parser</tags>
-    </metadata>
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+      <licenseUrl>https://raw.githubusercontent.com/ladimolnar/BitcoinBlockchain/master/LICENSE</licenseUrl>
+      <projectUrl>https://github.com/ladimolnar/BitcoinBlockchain/wiki</projectUrl>
+      <requireLicenseAcceptance>false</requireLicenseAcceptance>
+      <description>$description$</description>
+      <releaseNotes>Accommodate for block versions and 0x20000002 (536870914).</releaseNotes>
+      <copyright>Copyright 2016, 2017</copyright>
+      <tags>Bitcoin blockchain parser</tags>
+  </metadata>
 </package>
