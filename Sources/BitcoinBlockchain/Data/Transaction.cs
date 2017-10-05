@@ -27,15 +27,22 @@ namespace BitcoinBlockchain.Data
         private readonly List<TransactionOutput> transactionOutputs;
 
         /// <summary>
+        /// Witness data, one for each txin
+        /// </summary>
+        private readonly List<Witness> transactionWitness;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Transaction" /> class.
         /// </summary>
         public Transaction()
         {
             this.transactionInputs = new List<TransactionInput>();
             this.transactionOutputs = new List<TransactionOutput>();
+            this.transactionWitness = new List<Witness>();
 
             this.Inputs = new ReadOnlyCollection<TransactionInput>(this.transactionInputs);
             this.Outputs = new ReadOnlyCollection<TransactionOutput>(this.transactionOutputs);
+            this.Witness = new ReadOnlyCollection<Witness>(this.transactionWitness);
         }
 
         /// <summary>
@@ -71,6 +78,16 @@ namespace BitcoinBlockchain.Data
         public ReadOnlyCollection<TransactionOutput> Outputs { get; private set; }
 
         /// <summary>
+        /// Gets the read-only collection witness data
+        /// </summary>
+        public ReadOnlyCollection<Witness> Witness { get; private set; }
+
+        /// <summary>
+        /// Gets if the transaction has any any witness data (SegWit)
+        /// </summary>
+        public bool HasWitnessData { get { return transactionWitness.Count != 0; } }
+
+        /// <summary>
         /// Adds a new input to the list of transaction inputs.
         /// </summary>
         /// <param name="transactionInput">
@@ -79,6 +96,18 @@ namespace BitcoinBlockchain.Data
         public void AddInput(TransactionInput transactionInput)
         {
             this.transactionInputs.Add(transactionInput);
+        }
+
+        /// <summary>
+        /// Adds witness data to the list of transaction witnesses
+        /// There should be one Witness object for each txin
+        /// </summary>
+        /// <param name="witness">
+        /// The witness that should be added to the list of witnesses.
+        /// </param>
+        public void AddWitness(Witness witness)
+        {
+            this.transactionWitness.Add(witness);
         }
 
         /// <summary>

@@ -152,20 +152,11 @@ namespace BitcoinBlockchain.Parser
 
             //// TODO: We need to understand better what is different in V2 and V3.
 
-            if (blockHeader.BlockVersion != 1 &&
-                blockHeader.BlockVersion != 2 &&
-                blockHeader.BlockVersion != 3 &&
-                blockHeader.BlockVersion != 0x20000007 &&
-                blockHeader.BlockVersion != 0x30000000 &&
-                blockHeader.BlockVersion != 4 &&
-                blockHeader.BlockVersion != 0x20000000 &&
-                blockHeader.BlockVersion != 0x20000001 &&
-                blockHeader.BlockVersion != 0x30000001 &&
-                blockHeader.BlockVersion != 0x08000004 &&
-                blockHeader.BlockVersion != 0x20000002 &&
-                blockHeader.BlockVersion != 0x30000007 &&
-                blockHeader.BlockVersion != 0x20000004)
-            {
+            if (   blockHeader.BlockVersion               != 1 &&                                  // original version
+                   blockHeader.BlockVersion               != 2 && blockHeader.BlockVersion != 3 && // used by BIP 34/65/66
+                 ((blockHeader.BlockVersion & 0xE0000000) != 0x20000000)                           // BIP 9 signaling
+               )
+            { 
                 throw new UnknownBlockVersionException(string.Format(CultureInfo.InvariantCulture, "Unknown block version: {0} ({0:X}).", blockHeader.BlockVersion));
             }
 
@@ -250,6 +241,22 @@ namespace BitcoinBlockchain.Parser
             return transactionOutput;
         }
 
+        private static Witness ParseWitness(BlockMemoryStreamReader blockMemoryStreamReader)
+        {
+            Witness witness = new Witness();
+
+            int witnessStackCount = (int)blockMemoryStreamReader.ReadVariableLengthInteger();
+            witness.WitnessStack = new List<ByteArray>();
+
+            for (int witnessStackIndex = 0; witnessStackIndex < witnessStackCount; witnessStackIndex++)
+            {
+                int witnessSize = (int)blockMemoryStreamReader.ReadVariableLengthInteger();
+                witness.WitnessStack.Add(new ByteArray(blockMemoryStreamReader.ReadBytes(witnessSize)));
+            }
+
+            return witness;
+        }
+
         /// <summary>
         /// Parses a Bitcoin transaction.
         /// </summary>
@@ -269,6 +276,19 @@ namespace BitcoinBlockchain.Parser
 
             int inputsCount = (int)blockMemoryStreamReader.ReadVariableLengthInteger();
 
+            bool isSegWit = false;
+            if (inputsCount == 0)
+            {
+                byte flag = blockMemoryStreamReader.ReadByte();
+                if (flag != 0x01)
+                {
+                    throw new InvalidBlockchainContentException(string.Format(CultureInfo.InvariantCulture,
+                        "Unknown transaction serialization. No input transactions, but SegWit flag was {0} instead of 1.", flag));
+                }
+                inputsCount = (int)blockMemoryStreamReader.ReadVariableLengthInteger();
+                isSegWit = true;
+            }
+
             for (int inputIndex = 0; inputIndex < inputsCount; inputIndex++)
             {
                 TransactionInput transactionInput = BlockchainParser.ParseTransactionInput(blockMemoryStreamReader);
@@ -283,6 +303,17 @@ namespace BitcoinBlockchain.Parser
                 transaction.AddOutput(transactionOutput);
             }
 
+            int positionInBaseStreamAfterTxOuts = (int)blockMemoryStreamReader.BaseStream.Position;
+
+            if (isSegWit)
+            {
+                for (int inputIndex = 0; inputIndex < inputsCount; inputIndex++)
+                {
+                    Witness witness = BlockchainParser.ParseWitness(blockMemoryStreamReader);
+                    transaction.AddWitness(witness);
+                }
+            }
+
             // TODO: Need to find out more details about the semantic of TransactionLockTime.
             transaction.TransactionLockTime = blockMemoryStreamReader.ReadUInt32();
 
@@ -295,10 +326,37 @@ namespace BitcoinBlockchain.Parser
                 //// Here we take advantage of the fact that the entire block was loaded as an in-memory buffer.
                 //// The base stream of blockMemoryStreamReader is that in-memory buffer.
 
-                byte[] baseBuffer = blockMemoryStreamReader.GetBuffer();
-                int transactionBufferSize = positionInBaseStreamAfterTransactionEnd - positionInBaseStreamAtTransactionStart;
+                byte[] baseBuffer = blockMemoryStreamReader.GetBuffer(), hash1 = null;
 
-                byte[] hash1 = sha256.ComputeHash(baseBuffer, positionInBaseStreamAtTransactionStart, transactionBufferSize);
+                if (isSegWit)
+                {
+                    using (SHA256Managed innerSHA256 = new SHA256Managed())
+                    {
+                        //// SegWit transactions are still identified by their txid, which is double SHA256 of the old
+                        //// serialization format (i.e. no marker, flag, or witness). So, we need to calculate the txid by 
+                        //// recreating the old format as the input to the hash algorithm.
+
+                        // First, the version number
+                        innerSHA256.TransformBlock(baseBuffer, positionInBaseStreamAtTransactionStart, 4, baseBuffer, positionInBaseStreamAtTransactionStart);
+
+                        // Skip the marker and flag (each one byte), then read in txins and txouts (starting with txin count)
+                        int txStart = positionInBaseStreamAtTransactionStart + 6;
+                        int txSize = positionInBaseStreamAfterTxOuts - txStart;
+                        innerSHA256.TransformBlock(baseBuffer, txStart, txSize, baseBuffer, txStart);
+
+                        ///// After the transactions comes the segregated witness data, which is not included in the txid.
+                        ///// The only thing left to add to calcualte the txid is nLockTime located in the last 4 bytes
+                        int lockTimeStart = positionInBaseStreamAfterTransactionEnd - 4;
+                        innerSHA256.TransformFinalBlock(baseBuffer, lockTimeStart, 4);
+                        hash1 = innerSHA256.Hash;
+                    }
+                }
+                else
+                {
+                    int transactionBufferSize = positionInBaseStreamAfterTransactionEnd - positionInBaseStreamAtTransactionStart;
+                    hash1 = sha256.ComputeHash(baseBuffer, positionInBaseStreamAtTransactionStart, transactionBufferSize);
+                }
+
                 transaction.TransactionHash = new ByteArray(sha256.ComputeHash(hash1).ReverseByteArray());
             }
 
