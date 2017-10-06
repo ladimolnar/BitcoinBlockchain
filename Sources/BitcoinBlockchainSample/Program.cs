@@ -14,7 +14,7 @@ namespace BitcoinBlockchainSample
     {
         private static int Main(string[] args)
         {
-            if (args.Length != 1)
+            if (args.Length < 1)
             {
                 Console.Error.WriteLine("Invalid command line. Run \"BitcoinBlockchainSample /?\" for usage.");
             }
@@ -26,14 +26,14 @@ namespace BitcoinBlockchainSample
                 }
                 else
                 {
-                    ParseBlockchainFiles(args[0]);
+                    ParseBlockchainFiles(args[0], args.Length > 1 ? args[1] : null);
                 }
             }
 
             return 0;
         }
 
-        private static void ParseBlockchainFiles(string pathToBlockchain)
+        private static void ParseBlockchainFiles(string pathToBlockchain, string firstBlock)
         {
             BlockchainStatistics overallStatistics = new BlockchainStatistics();
             BlockchainStatistics blockFileStatistics = new BlockchainStatistics();
@@ -44,7 +44,7 @@ namespace BitcoinBlockchainSample
             // to its constructor. 
             // TIP: Class IBlockchainParser provides several constructors that are useful 
             //      in different scenarios.
-            IBlockchainParser blockchainParser = new BlockchainParser(pathToBlockchain);
+            IBlockchainParser blockchainParser = new BlockchainParser(pathToBlockchain, firstBlock);
 
             // Call blockchainParser.SetBlockId is the blockchain uses a value different than the standard one 
             // for the "BlockId" field of each block. For example on testnet / testnet3.
@@ -124,7 +124,7 @@ namespace BitcoinBlockchainSample
             Console.WriteLine("    basic functions of the BitcoinBlockchain class library.");
             Console.WriteLine();
             Console.WriteLine("USAGE:");
-            Console.WriteLine("    BitcoinBlockchainSample.exe /? | Path_To_Blockchain_Files");
+            Console.WriteLine("    BitcoinBlockchainSample.exe /? | Path_To_Blockchain_Files [First_Block_File]");
         }
     }
 }
