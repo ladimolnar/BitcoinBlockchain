@@ -150,14 +150,16 @@ namespace BitcoinBlockchain.Parser
 
             blockHeader.BlockVersion = blockMemoryStreamReader.ReadUInt32();
 
-            //// TODO: We need to understand better what is different in V2 and V3.
-
-            if (   blockHeader.BlockVersion               != 1 &&                                  // original version
-                   blockHeader.BlockVersion               != 2 && blockHeader.BlockVersion != 3 && // used by BIP 34/65/66
-                 ((blockHeader.BlockVersion & 0xE0000000) != 0x20000000)                           // BIP 9 signaling
-               )
-            { 
-                throw new UnknownBlockVersionException(string.Format(CultureInfo.InvariantCulture, "Unknown block version: {0} ({0:X}).", blockHeader.BlockVersion));
+            switch (blockHeader.BlockVersion)
+            {
+                case 1: case 2: case 3: case 4: // original block version and BIP 34/65/66
+                    break;
+                default: 
+                    if ((blockHeader.BlockVersion & 0xE0000000) != 0x20000000 && // BIP 9 signaling
+                        (blockHeader.BlockVersion & 0x08000000) != 0x08000000    // BitPay adaptive block size HF signaling
+                       ) 
+                        throw new UnknownBlockVersionException(string.Format(CultureInfo.InvariantCulture, "Unknown block version: {0} ({0:X}).", blockHeader.BlockVersion));
+                    break;
             }
 
             blockHeader.PreviousBlockHash = new ByteArray(blockMemoryStreamReader.ReadBytes(32).ReverseByteArray());
